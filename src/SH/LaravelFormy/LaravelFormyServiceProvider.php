@@ -20,6 +20,11 @@ class LaravelFormyServiceProvider extends ServiceProvider
 	 */
 	public function register()
 	{
+
+	}
+
+	public function boot()
+	{
 		$this->package('sahanh/laravel-formy');
 	}
 
