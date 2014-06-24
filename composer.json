@@ -1,5 +1,5 @@
 {
-    "name": "sahanh/laravel-formy",
+    "name": "sahanh/laravel-formy2",
     "description": "",
     "authors": [
         {
@@ -12,7 +12,10 @@
         "illuminate/support": "4.2.*"
     },
     "autoload": {
-        "psr-4": {
+        "classmap": [
+            "src/migrations"
+        ],
+        "psr-0": {
             "SH\\LaravelFormy\\": "src/"
         }
     },
