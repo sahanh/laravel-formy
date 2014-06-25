@@ -59,7 +59,8 @@ class Basic implements TemplateInterface
                 break;
 
             case 'select':
-                # code...
+                    $render[] = Form::label($e->getName(), $e->getLabel());
+                    $render[] = Form::select($e->getName(), (array) $e->getAttribute('options'), $e->getValue(), ['class' => 'form-control input-sm']);
                 break;
 
             case 'submit':
