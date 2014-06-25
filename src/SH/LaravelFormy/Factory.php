@@ -10,12 +10,13 @@ class Factory
 
     public function make($config)
     {
-        if ($config instanceOf FormConfig) {
-            return $this->makeFormConfig($config);
-        }
+        if (is_string($config))
+            $config = new $config;
+
+        return $this->makeFormConfig($config);
     }
 
-    public function makeFormConfig($config)
+    public function makeFormConfig(FormConfig $config)
     {
         $validation_rules = $config->getValidationRules();
         $val = new LaravelValidator;
@@ -36,6 +37,9 @@ class Factory
 
                 $element = new Element($field_name, $field_data['type'], array_get($field_data, 'a', array()));
                 $element->setLabel(array_get($field_data, 'l'));
+
+                if (array_get($field_data, 'a'))
+                    $element->setAttributes(array_get($field_data, 'a'));
 
                 if ($descrip = array_get($field_data, 'description'))
                     $element->setMeta('description', $descrip);
