@@ -2,9 +2,10 @@
 namespace SH\LaravelFormy\Templates;
 
 use SH\Formy\Form as FormyForm;
+use SH\Formy\TemplateInterface;
 use Illuminate\Support\Facades\Form;
 
-class Basic
+class Basic implements TemplateInterface
 {
     protected $form;
 
@@ -31,7 +32,7 @@ class Basic
             }
 
         }
-
+        $h .= Form::submit('Create', array('class' => 'btn btn-primary'));
         $h .= Form::close();
         return $h;
     }
