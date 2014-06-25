@@ -20,12 +20,10 @@ class Factory
         $validation_rules = $config->getValidationRules();
         $val = new LaravelValidator;
         $val->setRules($validation_rules);
-        
+
         $form = new Form;
         $form->setAttribute('action', $config->getAction());
         $form->setTemplate($config->getTemplateInstance());
-
-        $form->setValidator($val);
 
         $fields_data = $config->getFields();
 
@@ -48,6 +46,8 @@ class Factory
 
             $form->addFieldset($fs);
         }
+
+        $form->setValidator($val);
 
         return $form;
     }
