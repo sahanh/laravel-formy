@@ -22,8 +22,7 @@ class Basic implements TemplateInterface
 
     public function render()
     {
-
-        $h = Form::open(['action' => $this->getForm()->getAttribute('action')]);
+        $h = Form::open($this->getForm()->getAttributes());
 
         foreach ($this->getForm()->getFieldsets() as $fieldset) {
 
