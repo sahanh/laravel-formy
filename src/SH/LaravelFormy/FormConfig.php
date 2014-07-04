@@ -55,8 +55,11 @@ abstract class FormConfig
     {
         $field_set_rules = array();
 
-        foreach ($this->getFieldsetFields($fieldset_name) as $field_name => $field_data)
-            $field_set_rules[$field_name] = $field_data['v'];
+        foreach ($this->getFieldsetFields($fieldset_name) as $field_name => $field_data) {
+            if (isset($field_data['v']))
+                $field_set_rules[$field_name] = $field_data['v'];
+        } 
+            
         
         return $field_set_rules;
     }
