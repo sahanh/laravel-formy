@@ -4,6 +4,7 @@ namespace SH\LaravelFormy;
 use SH\Formy\Form;
 use SH\Formy\Fieldset;
 use SH\Formy\Input\Element;
+use SH\Formy\Input\ArrayElement;
 
 class Factory
 {
@@ -34,18 +35,8 @@ class Factory
             $fs->setName($fieldset_name);
 
             foreach ($fields as $field_name => $field_data) {
-
-                $element = new Element($field_name, $field_data['type'], array_get($field_data, 'a', array()));
-                $element->setLabel(array_get($field_data, 'l'));
-
-                if (array_get($field_data, 'a'))
-                    $element->setAttributes(array_get($field_data, 'a'));
-
-                if ($descrip = array_get($field_data, 'description'))
-                    $element->setMeta('description', $descrip);
-
+                $element = $this->makeElement($field_name, $field_data);
                 $fs->addElement($element);
-
             }
 
             $form->addFieldset($fs);
@@ -54,5 +45,26 @@ class Factory
         $form->setValidator($val);
 
         return $form;
+    }
+
+    protected function makeElement($field_name, $field_data)
+    {
+        $generator = 'SH\Formy\Input\Element';
+
+        if (ends_with($field_name, '[]')) {
+            $field_name = str_replace('[]', '', $field_name);
+            $generator  = 'SH\Formy\Input\ArrayElement';
+        }
+
+        $element = new $generator($field_name, $field_data['type'], array_get($field_data, 'a', array()));
+        $element->setLabel(array_get($field_data, 'l'));
+
+        if (array_get($field_data, 'a'))
+            $element->setAttributes(array_get($field_data, 'a'));
+
+        if ($descrip = array_get($field_data, 'description'))
+            $element->setMeta('description', $descrip);
+
+        return $element;
     }
 }

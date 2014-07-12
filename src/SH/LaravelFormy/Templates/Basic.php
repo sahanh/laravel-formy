@@ -40,6 +40,9 @@ class Basic implements TemplateInterface
     {
         $e     = $element;
         $type  = $e->getType();
+        $atts  = $e->getAttributes();
+
+        $atts['class'] = array_get($atts, 'class').' '.'form-control';
 
         $render   = [];
 
@@ -49,7 +52,7 @@ class Basic implements TemplateInterface
             case 'password':
             case 'hidden':
                     $render[] = Form::label($e->getName(), $e->getLabel());
-                    $render[] = Form::{$type}($e->getName(), $e->getValue(), ['class' => 'form-control']);
+                    $render[] = Form::{$type}($e->getName(), $e->getValue(), $atts);
                 break;
             
             case 'checkbox':
@@ -59,7 +62,7 @@ class Basic implements TemplateInterface
 
             case 'select':
                     $render[] = Form::label($e->getName(), $e->getLabel());
-                    $render[] = Form::select($e->getName(), (array) $e->getAttribute('options'), $e->getValue(), ['class' => 'form-control input-sm']);
+                    $render[] = Form::select($e->getName(), (array) $e->getAttribute('options'), $e->getValue(), array_except($atts, ['options']));
                 break;
 
             case 'submit':
