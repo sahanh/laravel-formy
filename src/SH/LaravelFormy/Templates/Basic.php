@@ -31,7 +31,7 @@ class Basic implements TemplateInterface
             }
 
         }
-        $h .= Form::submit('Create', array('class' => 'btn btn-primary'));
+        $h .= Form::submit('Submit', array('class' => 'btn btn-primary'));
         $h .= Form::close();
         return $h;
     }
