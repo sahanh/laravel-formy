@@ -38,7 +38,11 @@ class Basic implements TemplateInterface
 
     public function renderElement($element)
     {
-        $e     = $element;
+        if (is_string($element))
+            $e = $this->form->getElement($element);
+        else
+            $e = $element;
+
         $type  = $e->getType();
         $atts  = $e->getAttributes();
 
