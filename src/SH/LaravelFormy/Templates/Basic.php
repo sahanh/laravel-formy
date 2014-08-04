@@ -22,7 +22,7 @@ class Basic implements TemplateInterface
 
     public function render()
     {
-        $h = Form::open($this->getForm()->getAttributes());
+        $h = $this->formBegin();
 
         foreach ($this->getForm()->getFieldsets() as $fieldset) {
 
@@ -31,9 +31,24 @@ class Basic implements TemplateInterface
             }
 
         }
-        $h .= Form::submit('Submit', array('class' => 'btn btn-primary'));
-        $h .= Form::close();
+        $h .= $this->formActions();
+        $h .= $this->formEnd();
         return $h;
+    }
+
+    public function formBegin()
+    {
+        return Form::open($this->getForm()->getAttributes());
+    }
+
+    public function formEnd()
+    {
+        return Form::close();
+    }
+
+    public function formActions()
+    {
+        return Form::submit('Submit', array('class' => 'btn btn-primary'));
     }
 
     public function renderElement($element)
