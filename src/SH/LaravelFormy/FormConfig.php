@@ -6,6 +6,7 @@
 namespace SH\LaravelFormy;
 
 use InvalidArgumentException;
+use OutOfRangeException;
 use SH\LaravelFormy\Exception\E;
 
 abstract class FormConfig
@@ -62,5 +63,18 @@ abstract class FormConfig
             
         
         return $field_set_rules;
+    }
+
+    public function ammendFieldAttributes($field_path, array $attributes)
+    {
+        $field = array_get($this->fields, $field_path);
+        if (!$field)
+            throw new OutOfRangeException("No field exist for {$field}");
+
+        $existing_attributes = (array) array_get($field, 'a');
+        $new_attributes      = array_merge($existing_attributes, $attributes);
+
+        array_set($this->fields, "{$field_path}.a", $new_attributes);
+        return $this->fields;
     }
 }
