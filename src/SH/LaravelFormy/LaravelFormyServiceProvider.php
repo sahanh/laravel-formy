@@ -20,7 +20,7 @@ class LaravelFormyServiceProvider extends ServiceProvider
 	 */
 	public function register()
 	{
-		$this->app->instance('laravel-formy', new Factory);
+		$this->app->instance('laravel-formy', $this->app->make('SH\\LaravelFormy\\Factory'));
 	}
 
 	public function boot()

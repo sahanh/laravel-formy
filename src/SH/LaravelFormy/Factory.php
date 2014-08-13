@@ -5,14 +5,21 @@ use SH\Formy\Form;
 use SH\Formy\Fieldset;
 use SH\Formy\Input\Element;
 use SH\Formy\Input\ArrayElement;
+use Illuminate\Container\Container;
 
 class Factory
 {
+    protected $container;
+
+    public function __construct(Container $container)
+    {
+        $this->container = $container;
+    }
 
     public function make($config)
     {
         if (is_string($config))
-            $config = new $config;
+            $config = $this->container->make($config);
 
         return $this->makeFormConfig($config);
     }
